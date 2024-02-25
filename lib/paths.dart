@@ -1,5 +1,5 @@
 class PATHS {
-  static const MAIN_PATH = 'http://192.168.43.82/api_h_super_hero/';
+  static const MAIN_PATH = 'http://10.0.0.5/api_h_super_hero/';
   static const authSignUpCompany = '${MAIN_PATH}auth_Company/signup.php';
   static const authSignInCompany = '${MAIN_PATH}auth_Company/login.php';
   static const authSignUpCustomers = '${MAIN_PATH}auth_customers/signup.php';

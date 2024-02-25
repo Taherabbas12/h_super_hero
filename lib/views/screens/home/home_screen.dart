@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:h_super_hero/colors_app.dart';
-import 'package:responsive_navigation_bar/responsive_navigation_bar.dart';
 
 import '../request/viewRequets.dart';
 import 'category.dart';
@@ -22,46 +22,110 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       print(_selectedIndex);
     });
+    Navigator.pop(context);
   }
 
-  List<Widget> view = [
-    const Home(),
-    Category(),
-    ViewRequest(),
-    Profile(),
+  List<WidgetName> view = [
+    WidgetName(const Home(), 'Home', Icons.home),
+    WidgetName(Category(), 'Category', Icons.category_outlined),
+    WidgetName(ViewRequest(), 'Request', Icons.watch_later_outlined),
+    WidgetName(Profile(), 'Profile', Icons.person)
   ];
-
+  ProfileData2? profileDataView2;
+  ProfileData? profileDataView;
   @override
   Widget build(BuildContext context) {
+    if (GetStorage().read('color') == "customers") {
+      profileDataView = ProfileData.fromMap(GetStorage().read('auth'));
+    } else {
+      profileDataView2 = ProfileData2.fromMap(GetStorage().read('auth'));
+    }
     return Scaffold(
-      body: SafeArea(child: view[_selectedIndex]),
-      bottomNavigationBar: ResponsiveNavigationBar(
-        selectedIndex: _selectedIndex,
+      body: SafeArea(child: view[_selectedIndex].body),
+      appBar: AppBar(),
 
-        onTabChange: changeTab,
-        // showActiveButtonText: false,
-        textStyle: TextStyle(
-          color: textColor,
-          fontWeight: FontWeight.bold,
+      drawer: Drawer(
+        //
+        child: Column(
+          children: [
+            GetStorage().read('color') == "customers"
+                ? UserAccountsDrawerHeader(
+                    decoration: BoxDecoration(color: primaryColorCo),
+                    currentAccountPicture: CircleAvatar(
+                        backgroundImage: AssetImage(profileDataView!.gender == 1
+                            ? 'assets/male.png'
+                            : 'assets/female.png')),
+                    accountName: Text(profileDataView!.name),
+                    accountEmail: Text(profileDataView!.email))
+                : UserAccountsDrawerHeader(
+                    decoration: BoxDecoration(color: primaryColorCo),
+                    currentAccountPicture: const CircleAvatar(
+                        backgroundImage: AssetImage('assets/female.png')),
+                    accountName: Text(profileDataView2!.name),
+                    accountEmail: Text(profileDataView2!.email)),
+
+            //
+            for (int i = 0; i < view.length; i++)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 5),
+                child: ListTile(
+                  leading: Icon(
+                    view[i].iconData,
+                    color: Colors.white,
+                  ),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5)),
+                  title: Text(
+                    view[i].name,
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                  tileColor: i == _selectedIndex
+                      ? primaryColorCo
+                      : primaryColorCo.withOpacity(0.7),
+                  onTap: () {
+                    //
+                    changeTab(i);
+                  },
+                ),
+              )
+          ],
         ),
-
-        navigationBarButtons: [
-          NavigationBarButton(
-              text: 'Home', icon: Icons.home, backgroundColor: primaryColorCo),
-          NavigationBarButton(
-              text: 'Category',
-              icon: Icons.category_outlined,
-              backgroundColor: primaryColorCo),
-          NavigationBarButton(
-              text: 'Request',
-              icon: Icons.watch_later_outlined,
-              backgroundColor: primaryColorCo),
-          NavigationBarButton(
-              text: 'profile',
-              icon: Icons.person,
-              backgroundColor: primaryColorCo),
-        ],
       ),
+
+      // bottomNavigationBar: ResponsiveNavigationBar(
+      //   selectedIndex: _selectedIndex,
+
+      //   onTabChange: changeTab,
+      //   // showActiveButtonText: false,
+      //   textStyle: TextStyle(
+      //     color: textColor,
+      //     fontWeight: FontWeight.bold,
+      //   ),
+
+      //   navigationBarButtons: [
+      //     NavigationBarButton(
+      //         text: 'Home', icon: Icons.home, backgroundColor: primaryColorCo),
+      //     NavigationBarButton(
+      //         text: 'Category',
+      //         icon: Icons.category_outlined,
+      //         backgroundColor: primaryColorCo),
+      //     NavigationBarButton(
+      //         text: 'Request',
+      //         icon: Icons.watch_later_outlined,
+      //         backgroundColor: primaryColorCo),
+      //     NavigationBarButton(
+      //         text: 'profile',
+      //         icon: Icons.person,
+      //         backgroundColor: primaryColorCo),
+      //   ],
+      // ),
     );
   }
+}
+
+class WidgetName {
+  String name;
+  Widget body;
+  IconData iconData;
+  WidgetName(this.body, this.name, this.iconData);
 }
