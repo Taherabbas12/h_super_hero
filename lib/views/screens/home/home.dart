@@ -1,14 +1,22 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../colors_app.dart';
 import '../../../paths.dart';
 import 'view_details_job.dart';
 
-class Home extends StatelessWidget {
-  const Home({super.key});
+class Home extends StatefulWidget {
+  Home({super.key});
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  TextEditingController search = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -21,56 +29,80 @@ class Home extends StatelessWidget {
           if (data['status'] == 'success') {
             //
             List d = data['data'];
-            print(d.length);
+            //  search
 
-            return ListView.builder(
-                itemCount: data['data'].length,
-                itemBuilder: (context, index) {
-                  Duration difference = DateTime.now().difference(
-                      DateTime.parse(data['data'][index]['DateTime']));
-
-                  // عرض الفارق
-                  print('الفارق الكلي: ${difference.toString()}');
-                  print('الأيام: ${difference.inDays}');
-                  // print('الساعات: ${difference.inHours}');
-                  // print('الدقائق: ${difference.inMinutes}');
-                  // print('الثواني: ${difference.inSeconds}');
-                  return Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: ListTile(
-                      onTap: () async {
-                        await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ViewDetailsJob(
-                                dataJob: data['data'][index],
-                                expier: difference.inDays <=
-                                    int.parse(
-                                        data['data'][index]['dayExpired']),
-                              ),
-                            ));
+            d = d
+                .where(
+                  (element) => element['title_Jop']
+                      .toString()
+                      .toLowerCase()
+                      .contains(search.text.toLowerCase().trim()),
+                )
+                .toList();
+            return Column(
+              children: [
+                SizedBox(
+                    height: 60,
+                    child: CupertinoSearchTextField(
+                      controller: search,
+                      onChanged: (v) {
+                        setState(() {});
                       },
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5)),
-                      tileColor: inputColor,
-                      title: Text(
-                        data['data'][index]['title_Jop'],
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                      subtitle: Text(
-                        'available : ${difference.inDays <= int.parse(data['data'][index]['dayExpired']) ? data['data'][index]['dayExpired'] : 'Expired'} day',
-                        style: const TextStyle(
-                            color: Color.fromARGB(255, 207, 207, 207)),
-                      ),
-                      trailing: Text(
-                        data['data'][index]['DateTime'],
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  );
-                });
+                      backgroundColor: primaryColorCo.withOpacity(0.8),
+                      itemColor: Colors.white,
+                      style: const TextStyle(color: Colors.white, fontSize: 17),
+                    )),
+                Expanded(
+                  child: ListView.builder(
+                      itemCount: d.length,
+                      itemBuilder: (context, index) {
+                        Duration difference = DateTime.now()
+                            .difference(DateTime.parse(d[index]['DateTime']));
+
+                        // عرض الفارق
+                        print('الفارق الكلي: ${difference.toString()}');
+                        print('الأيام: ${difference.inDays}');
+                        // print('الساعات: ${difference.inHours}');
+                        // print('الدقائق: ${difference.inMinutes}');
+                        // print('الثواني: ${difference.inSeconds}');
+                        return Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: ListTile(
+                            onTap: () async {
+                              await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ViewDetailsJob(
+                                      dataJob: d[index],
+                                      expier: difference.inDays <=
+                                          int.parse(d[index]['dayExpired']),
+                                    ),
+                                  ));
+                            },
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5)),
+                            tileColor: inputColor,
+                            title: Text(
+                              d[index]['title_Jop'],
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                            subtitle: Text(
+                              'available : ${difference.inDays <= int.parse(d[index]['dayExpired']) ? data['data'][index]['dayExpired'] : 'Expired'} day',
+                              style: const TextStyle(
+                                  color: Color.fromARGB(255, 207, 207, 207)),
+                            ),
+                            trailing: Text(
+                              d[index]['DateTime'],
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        );
+                      }),
+                ),
+              ],
+            );
           } else {
             return const Text('No jobs have been added yet');
           }
@@ -80,40 +112,6 @@ class Home extends StatelessWidget {
       },
     );
   }
-
-  // Widget viewValue(name, value, context) {
-  //   return Container(
-  //     width: MediaQuery.sizeOf(context).width * 0.45,
-  //     height: MediaQuery.sizeOf(context).width * 0.45,
-  //     margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-  //     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-  //     decoration: BoxDecoration(
-  //         color: primaryColorCo, borderRadius: BorderRadius.circular(10)),
-  //     alignment: Alignment.center,
-  //     child: Column(
-  //       crossAxisAlignment: CrossAxisAlignment.center,
-  //       mainAxisAlignment: MainAxisAlignment.center,
-  //       children: [
-  //         Text(
-  //           '$name',
-  //           style: TextStyle(fontSize: 25, color: textColor),
-  //         ),
-  //         const SizedBox(
-  //           height: 15,
-  //         ),
-  //         Text(
-  //           '$value',
-  //           style: TextStyle(fontSize: 35, color: textColor),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
-//   {
-//   "company_count": "3",
-//   "required_jobs_count": "0",
-//   "customers_count": "7"
-// }
 }
 
 // return Wrap(

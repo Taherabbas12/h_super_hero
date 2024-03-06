@@ -27,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   List<WidgetName> view = [
-    WidgetName(const Home(), 'Home', Icons.home),
+    WidgetName(Home(), 'Home', Icons.home),
     WidgetName(Category(), 'Category', Icons.category_outlined),
     WidgetName(ViewRequest(), 'Request', Icons.watch_later_outlined),
     WidgetName(Profile(), 'Profile', Icons.person)
