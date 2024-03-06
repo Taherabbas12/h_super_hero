@@ -31,9 +31,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(useMaterial3: true),
       debugShowCheckedModeBanner: false,
       routes: {
-        '/': (context) =>
-            dataType.isEmpty ? SplashScreen() : const HomeScreen(),
-        'SplashScreen': (context) => SplashScreen(),
+        '/': (context) => dataType.isEmpty ? AuthType() : const HomeScreen(),
+        // 'SplashScreen': (context) => SplashScreen(),
         'SignScreenCompany': (context) => const SignScreenCompany(),
         'SignScreenCustomers': (context) => const SignScreenCustomers(),
         'SignIn': (context) => SignIn(),
