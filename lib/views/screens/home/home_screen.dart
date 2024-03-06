@@ -3,6 +3,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:h_super_hero/colors_app.dart';
 
 import '../request/viewRequets.dart';
+import '../welconm_screen.dart';
 import 'category.dart';
 import 'home.dart';
 import 'profile.dart';
@@ -38,7 +39,15 @@ class _HomeScreenState extends State<HomeScreen> {
     if (GetStorage().read('color') == "customers") {
       profileDataView = ProfileData.fromMap(GetStorage().read('auth'));
     } else {
-      profileDataView2 = ProfileData2.fromMap(GetStorage().read('auth'));
+      try {
+        profileDataView2 = ProfileData2.fromMap(GetStorage().read('auth'));
+      } catch (e) {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => WelcoomeScreen(),
+            ));
+      }
     }
     return Scaffold(
       body: SafeArea(child: view[_selectedIndex].body),

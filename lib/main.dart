@@ -9,6 +9,7 @@ import 'views/screens/auth/sign_up.dart';
 import 'views/screens/auth/sign_up_customers.dart';
 import 'views/screens/home/home_screen.dart';
 import 'views/screens/splash_screen.dart';
+import 'views/screens/welconm_screen.dart';
 
 void main() async {
   await GetStorage.init();
@@ -31,7 +32,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(useMaterial3: true),
       debugShowCheckedModeBanner: false,
       routes: {
-        '/': (context) => dataType.isEmpty ? AuthType() : const HomeScreen(),
+        '/': (context) =>
+            dataType.isEmpty ? WelcoomeScreen() : const HomeScreen(),
         // 'SplashScreen': (context) => SplashScreen(),
         'SignScreenCompany': (context) => const SignScreenCompany(),
         'SignScreenCustomers': (context) => const SignScreenCustomers(),
