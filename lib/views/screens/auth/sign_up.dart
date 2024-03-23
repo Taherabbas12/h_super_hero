@@ -150,7 +150,7 @@ class _SignUpState extends State<SignUp> {
                     elevation: 10,
                     backgroundColor: const Color(0xff008d5d)),
                 child: const Text(
-                  'انشاء الحساب',
+                  'Create an account',
                   style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,

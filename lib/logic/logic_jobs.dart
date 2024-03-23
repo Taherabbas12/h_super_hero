@@ -7,6 +7,33 @@ import 'package:get_storage/get_storage.dart';
 import '../paths.dart';
 
 class LogicJobs {
+  static Future<bool> editMessageJob(
+      String id, String message, BuildContext context) async {
+//
+
+    FormData formData = FormData();
+    formData.fields.add(MapEntry('id', id));
+    formData.fields.add(MapEntry('message', message));
+    Response response = await Dio().post(PATHS.editMessageJob, data: formData);
+    print(response);
+    Map d = jsonDecode(response.data);
+    print('______________AAA123');
+    print(d);
+    print('______________AAA123');
+    //
+    if (d['status'] == 'success') {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Reply added')));
+      return true;
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Adding reply failed'),
+        backgroundColor: Colors.red,
+      ));
+      return false;
+    }
+  }
+
   static Future<bool> addJob(
       AddJob dataAddJob, context, String nameTypeJobs) async {
     print(await GetStorage().read('auth')['id']);

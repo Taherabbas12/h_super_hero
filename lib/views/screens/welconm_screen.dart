@@ -12,7 +12,7 @@ class WelcoomeScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const Text(
-            'Hello job seekers application',
+            'Hello Job Seeker Application',
             style: TextStyle(fontSize: 35),
             textAlign: TextAlign.center,
           ),

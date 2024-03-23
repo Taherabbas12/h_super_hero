@@ -105,7 +105,7 @@ class SignInCustomers extends StatelessWidget {
                           context, 'HomeScreen', (route) => false);
                     } else {
                       ToastContext().init(context);
-                      Toast.show('يرجى ادخل البيانات بشكل صحيح',
+                      Toast.show('Please enter the data correctly',
                           duration: 3,
                           gravity: Toast.bottom,
                           backgroundColor: Colors.red);
@@ -113,7 +113,7 @@ class SignInCustomers extends StatelessWidget {
                     }
                   } else {
                     ToastContext().init(context);
-                    Toast.show("يرجى ملأ كل الحقول",
+                    Toast.show("Please fill out all fields",
                         duration: 3,
                         gravity: Toast.bottom,
                         backgroundColor: Colors.red);
@@ -128,7 +128,7 @@ class SignInCustomers extends StatelessWidget {
                     elevation: 10,
                     backgroundColor: const Color(0xffff6363)),
                 child: const Text(
-                  'تسجيل دخول',
+                  'Login',
                   style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,

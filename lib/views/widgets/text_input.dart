@@ -139,3 +139,28 @@ Widget textInput3Nu(
         ),
       ),
     );
+
+Widget textInputMessage(controller, hint, {bool passsword = false}) =>
+    Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          color: const Color(0xfff0f0f0),
+          boxShadow: const [
+            BoxShadow(
+                color: Color.fromARGB(255, 103, 103, 103),
+                blurRadius: 4,
+                offset: Offset(2, 2))
+          ]),
+      child: TextField(
+        controller: controller,
+        style: const TextStyle(fontSize: 18),
+        obscureText: passsword,
+        minLines: 5,
+        maxLines: 7,
+        decoration: InputDecoration(
+            labelStyle: const TextStyle(fontSize: 18),
+            hintText: hint,
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(15))),
+      ),
+    );

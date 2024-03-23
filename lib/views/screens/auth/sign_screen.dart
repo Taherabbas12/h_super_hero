@@ -30,7 +30,7 @@ class SignScreenCompany extends StatelessWidget {
                 elevation: 10,
                 backgroundColor: Colors.redAccent),
             child: Text(
-              'انشاء حساب',
+              'Create an account',
               style: TextStyle(
                   fontSize: 30, fontWeight: FontWeight.bold, color: textColor),
               textAlign: TextAlign.center,
@@ -48,7 +48,7 @@ class SignScreenCompany extends StatelessWidget {
                 elevation: 10,
                 backgroundColor: Color.fromARGB(255, 159, 159, 159)),
             child: Text(
-              'تسجيل دخول',
+              'Login',
               style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,

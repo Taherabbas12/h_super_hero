@@ -8,7 +8,6 @@ import 'views/screens/auth/sign_screen_customers.dart';
 import 'views/screens/auth/sign_up.dart';
 import 'views/screens/auth/sign_up_customers.dart';
 import 'views/screens/home/home_screen.dart';
-import 'views/screens/splash_screen.dart';
 import 'views/screens/welconm_screen.dart';
 
 void main() async {
@@ -43,6 +42,7 @@ class MyApp extends StatelessWidget {
         'SignUpCustomers': (context) => SignUpCustomers(),
         'AuthType': (context) => const AuthType(),
         'HomeScreen': (context) => const HomeScreen(),
+        'SplashScreen': (context) => const WelcoomeScreen(),
       },
     );
   }

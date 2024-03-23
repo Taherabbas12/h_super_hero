@@ -52,11 +52,12 @@ class _SignUpCustomersState extends State<SignUpCustomers> {
   TextEditingController rePassword = TextEditingController();
 
   TextEditingController experience = TextEditingController();
+  TextEditingController dataOld = TextEditingController();
 
   String gender = 'Choose gender';
   String location = 'Choose Loaction';
 
-  DateTime dateTime = DateTime(2002);
+  // Str dateTime = DateTime(2002);
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +78,7 @@ class _SignUpCustomersState extends State<SignUpCustomers> {
                   height: 60,
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                  margin: const EdgeInsets.symmetric(horizontal: 20),
+                  margin: const EdgeInsets.only(left: 20),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       color: const Color(0xfff0f0f0),
@@ -106,33 +107,37 @@ class _SignUpCustomersState extends State<SignUpCustomers> {
                     value: gender,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 20),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15)),
-                        fixedSize:
-                            Size(MediaQuery.sizeOf(context).width * 0.33, 60)),
-                    onPressed: () async {
-                      try {
-                        dateTime = (await showDatePicker(
-                          context: context,
-                          firstDate: DateTime(1960),
-                          lastDate: DateTime(2010),
-                        ))!;
-                        setState(() {});
-                      } catch (e) {}
-                    },
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(Icons.date_range_sharp),
-                          Text(
-                              '${dateTime.year}/${dateTime.month}/${dateTime.day}')
-                        ]),
-                  ),
-                )
+                SizedBox(
+                    width: MediaQuery.sizeOf(context).width * 0.44,
+                    child: textInput(dataOld, 'Enter Old')),
+
+                // Padding(
+                //   padding: const EdgeInsets.only(right: 20),
+                //   child: ElevatedButton(
+                //     style: ElevatedButton.styleFrom(
+                //         shape: RoundedRectangleBorder(
+                //             borderRadius: BorderRadius.circular(15)),
+                //         fixedSize:
+                //             Size(MediaQuery.sizeOf(context).width * 0.33, 60)),
+                //     onPressed: () async {
+                //       try {
+                //         dateTime = (await showDatePicker(
+                //           context: context,
+                //           firstDate: DateTime(1960),
+                //           lastDate: DateTime(2010),
+                //         ))!;
+                //         setState(() {});
+                //       } catch (e) {}
+                //     },
+                //     child: Column(
+                //         mainAxisAlignment: MainAxisAlignment.center,
+                //         children: [
+                //           const Icon(Icons.date_range_sharp),
+                //           Text(
+                //               '${dateTime.year}/${dateTime.month}/${dateTime.day}')
+                //         ]),
+                //   ),
+                // )
               ],
             ),
             const SizedBox(height: 20),
@@ -186,7 +191,8 @@ class _SignUpCustomersState extends State<SignUpCustomers> {
                     rePassword.text.isNotEmpty &&
                     location != locationData[0] &&
                     experience.text.isNotEmpty &&
-                    certificate.text.isNotEmpty) {
+                    certificate.text.isNotEmpty &&
+                    dataOld.text.isNotEmpty) {
                   if (password.text == rePassword.text &&
                       password.text.length > 7) {
 // Create Account Company
@@ -199,7 +205,7 @@ class _SignUpCustomersState extends State<SignUpCustomers> {
                       'gender': gender == 'Male' ? 1 : 2,
                       'certificate': certificate.text.trim(),
                       'experience': experience.text.trim(),
-                      'dataOld': dateTime,
+                      'dataOld': dataOld.text,
                       'location': location,
                     });
 
@@ -216,7 +222,7 @@ class _SignUpCustomersState extends State<SignUpCustomers> {
                         'gender': gender == 'Male' ? 1 : 2,
                         'certificate': certificate.text.trim(),
                         'experience': experience.text.trim(),
-                        'dataOld': dateTime.toString(),
+                        'dataOld': dataOld.text.toString(),
                         'location': location,
                         'typeAuht': 'customers',
                       });
@@ -232,14 +238,14 @@ class _SignUpCustomersState extends State<SignUpCustomers> {
                     }
                   } else {
                     ToastContext().init(context);
-                    Toast.show("يجب ان يكون الرمز متساوي واكبر من 8 ",
+                    Toast.show("The virtual symbol must be greater than 8",
                         duration: 3,
                         gravity: Toast.bottom,
                         backgroundColor: Colors.red);
                   }
                 } else {
                   ToastContext().init(context);
-                  Toast.show("يرجى ملأ كل الحقول",
+                  Toast.show("Please fill out all fields",
                       duration: 3,
                       gravity: Toast.bottom,
                       backgroundColor: Colors.red);
@@ -250,7 +256,7 @@ class _SignUpCustomersState extends State<SignUpCustomers> {
                   elevation: 10,
                   backgroundColor: const Color(0xffff6363)),
               child: const Text(
-                'انشاء الحساب',
+                'Create an account',
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,

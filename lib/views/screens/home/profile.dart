@@ -8,12 +8,11 @@ class Profile extends StatelessWidget {
   Profile({super.key});
   ProfileData2? profileDataView2;
   ProfileData? profileDataView;
-  DateTime? dateTime;
+
   @override
   Widget build(BuildContext context) {
     if (GetStorage().read('color') == "customers") {
       profileDataView = ProfileData.fromMap(GetStorage().read('auth'));
-      dateTime = DateTime.parse(profileDataView!.dataOld);
     } else {
       profileDataView2 = ProfileData2.fromMap(GetStorage().read('auth'));
     }
@@ -37,8 +36,7 @@ class Profile extends StatelessWidget {
                 viewValue('Location', profileDataView!.location),
                 viewValue(
                     'Gender', profileDataView!.gender == 1 ? "male" : "female"),
-                viewValue('Date ',
-                    '${dateTime!.year}/${dateTime!.month}/${dateTime!.day}'),
+                viewValue('Old ', profileDataView!.dataOld),
                 viewValue('Experience', profileDataView!.experience),
                 viewValue('Certificate', profileDataView!.certificate),
                 Padding(
@@ -128,7 +126,10 @@ class Profile extends StatelessWidget {
                                 onPressed: () async {
                                   GetStorage().remove('color');
                                   await GetStorage().remove('auth');
-                                  Navigator.pushReplacementNamed(context, '/');
+                                  Navigator.pushReplacementNamed(
+                                      context, 'SplashScreen');
+
+                                  // Navigator.pushReplacementNamed(context, '/');
                                 },
                                 child: const Text('Sign Out')),
                           ],
@@ -148,20 +149,20 @@ class Profile extends StatelessWidget {
             ),
     );
   }
+}
 
-  Widget viewValue(name, value) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-      decoration: BoxDecoration(
-          color: primaryColorCo, borderRadius: BorderRadius.circular(10)),
-      alignment: Alignment.center,
-      child: Text(
-        '$name : $value',
-        style: TextStyle(fontSize: 20, color: textColor),
-      ),
-    );
-  }
+Widget viewValue(name, value) {
+  return Container(
+    margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+    decoration: BoxDecoration(
+        color: primaryColorCo, borderRadius: BorderRadius.circular(10)),
+    alignment: Alignment.center,
+    child: Text(
+      '$name : $value',
+      style: TextStyle(fontSize: 20, color: textColor),
+    ),
+  );
 }
 
 class ProfileData {

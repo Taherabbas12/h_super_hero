@@ -26,7 +26,7 @@ class AuthType extends StatelessWidget {
                 elevation: 10,
                 backgroundColor: Colors.redAccent),
             child: const Text(
-              'شركة او مؤسسة',
+              'Company',
               style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
@@ -48,7 +48,7 @@ class AuthType extends StatelessWidget {
                 elevation: 10,
                 backgroundColor: const Color.fromARGB(255, 159, 159, 159)),
             child: const Text(
-              'عميل عادي',
+              'Employee',
               style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,

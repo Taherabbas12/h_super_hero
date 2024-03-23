@@ -28,8 +28,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<WidgetName> view = [
     WidgetName(Home(), 'Home', Icons.home),
-    WidgetName(Category(), 'Category', Icons.category_outlined),
-    WidgetName(ViewRequest(), 'Request', Icons.watch_later_outlined),
+    WidgetName(Category(), 'Departments', Icons.category_outlined),
+    WidgetName(ViewRequest(), 'Employee Request', Icons.watch_later_outlined),
     WidgetName(Profile(), 'Profile', Icons.person)
   ];
   ProfileData2? profileDataView2;
@@ -41,17 +41,18 @@ class _HomeScreenState extends State<HomeScreen> {
     } else {
       try {
         profileDataView2 = ProfileData2.fromMap(GetStorage().read('auth'));
-      } catch (e) {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => WelcoomeScreen(),
-            ));
-      }
+      } catch (e) {}
     }
     return Scaffold(
       body: SafeArea(child: view[_selectedIndex].body),
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text(
+          GetStorage().read('auth')['name'],
+          style: TextStyle(
+              fontWeight: FontWeight.bold, fontSize: 25, color: primaryColorCo),
+        ),
+        centerTitle: true,
+      ),
 
       drawer: Drawer(
         //
